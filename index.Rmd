@@ -1,0 +1,63 @@
+---
+title: "JSC370 Final Project"
+author: "John Chen"
+output: 
+    html_document:
+        toc: TRUE
+        toc_float: TRUE
+---
+
+This is my JSC370 Final Project website.
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, include=FALSE}
+packages <- c("dplyr","tidyverse", "lubridate", "hms", "kableExtra","gridExtra", "httr")
+for(p in packages){
+ if(!require(p, character.only = TRUE)){
+  install.packages(p) 
+ }
+ library(p, character.only = TRUE)
+}
+library(tidyverse)
+library(plotly)
+library(widgetframe)
+library(tidytext)
+```
+
+```{r warning=FALSE, message=FALSE}
+source("process_starbucks_data.R")
+```
+
+```{r plot1}
+plot1 <- topwords |>
+  ggplot(aes(x=word)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+barplot <- ggplotly(plot1)
+```
+
+```{r plot2}
+plot2 <- sb_locs_state %>%
+  ggplot(aes(x=n_stores, population)) +
+  geom_point()
+scatplot <- ggplotly(plot2)
+```
+
+## Showcasing plots {.tabset}
+
+### Figure 1
+
+```{r echo=FALSE}
+scatplot
+```
+
+### Figure 2
+
+```{r echo=FALSE}
+barplot
+```
+
