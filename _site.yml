@@ -7,6 +7,9 @@ navbar:
       href: index.html
     - text: "README"
       href: README.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/jchenDDD/JSC370_final_project
 output:
   html_document:
     theme: cosmo

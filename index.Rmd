@@ -27,6 +27,8 @@ for(p in packages){
 source("analysis_heart_data.R")
 ```
 
+[Report Link](report.pdf)
+
 # Interactive plots and figure from analysis
 ```{r edaPlot}
 heart_temp <- heart %>%
