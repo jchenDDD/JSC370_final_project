@@ -16,9 +16,10 @@ plotly
 htmlwidgets
 widgetframe
 tidytext
-pROC
 ROCR
 randomForest
 xgboost
 lattice
 caret
+pROC
+broom

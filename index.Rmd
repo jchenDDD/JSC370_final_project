@@ -7,57 +7,115 @@ output:
         toc_float: TRUE
 ---
 
-This is my JSC370 Final Project website.
+
 ```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo=FALSE)
 knitr::opts_chunk$set(cache=TRUE)
 ```
 
-
 ```{r echo=FALSE, warning=FALSE, message=FALSE, include=FALSE}
-packages <- c("dplyr","tidyverse", "lubridate", "hms", "kableExtra","gridExtra", "httr")
+packages <- c("dplyr","tidyverse", "hms", "kableExtra","gridExtra", "plotly", "widgetframe", "tidytext", "pROC")
 for(p in packages){
  if(!require(p, character.only = TRUE)){
   install.packages(p) 
  }
  library(p, character.only = TRUE)
 }
-library(tidyverse)
-library(plotly)
-library(widgetframe)
-library(tidytext)
 ```
 
-```{r warning=FALSE, message=FALSE}
-source("process_starbucks_data.R")
+```{r message = FALSE, warning=FALSE}
+source("analysis_heart_data.R")
 ```
 
-```{r plot1}
-plot1 <- topwords |>
-  ggplot(aes(x=word)) +
-  geom_bar() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-barplot <- ggplotly(plot1)
+# Interactive plots and figure from analysis
+```{r edaPlot}
+heart_temp <- heart %>%
+  mutate(HD = case_when(
+    HeartDisease == 0 ~ "No",
+    HeartDisease == 1 ~ "Yes"
+  ))
+cholesterol_hist <- ggplot(heart_temp) +
+  geom_density(aes(x=Cholesterol, fill = HD), alpha = 0.5) +
+  facet_grid(ChestPainType ~ .) +
+  labs(x = "Cholesterol", y = "Density", title = "Cholesterol histogram by the presence of heart disease for each pain type") +
+  scale_fill_discrete(name = "Presence of Heart Disease") +
+  theme_minimal()
+```
+```{r}
+ggplotly(cholesterol_hist)
 ```
 
-```{r plot2}
-plot2 <- sb_locs_state %>%
-  ggplot(aes(x=n_stores, population)) +
-  geom_point()
-scatplot <- ggplotly(plot2)
+**TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic**
+
+Each row of graph represents a pain type. The distribution of cholesterol when there is a presence of heart disease does seem to change when split into different chest pain types. We can speculate that cholesterol may have multiple cofounders that effects its relationship with response. 
+
+
+
+```{r}
+ROC_plot <- ggplot() + geom_line(aes(x=FPR, y = TPR)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  labs(x = "False Positive Rate", y = "True Positive Rate", title = "ROC Curve Of Logistic Regression Model")+
+  theme_minimal()
+ROC_curve <- ggplotly(ROC_plot)
 ```
 
-## Showcasing plots {.tabset}
+```{r ROCplot, echo=FALSE, fig.cap="\\label{fig:ROCplot}Logistic Regression Result"}
+ROC_curve
+```
 
-### Figure 1
+This graph shows the ROC curve of the trained logistic regression model based on stepwise variable selection. Each pair of TPR and FPR corresponds to a specific threshold(from 0 to 1) used to evaluate the existence of heart disease based on the probability predicted by the logistic model. The dashed line is the identity line and it represents a "curve" that indicates the model randomly assigns predictions. The greater the area under the curve, the better the model is at intentionally determining the existence of a heart disease.
 
+
+
+```{r rfImportance}
+rf_importance_plot <- importance_df %>% ggplot() +
+  geom_bar(stat = "identity", aes(x=Variables, y = Importance)) +
+  coord_flip() +
+  labs(title = "Random Forest Rank Variables By Significance") +
+  theme_minimal()
+rf_plot <- ggplotly(rf_importance_plot)
+```
 ```{r echo=FALSE}
-scatplot
+rf_plot
 ```
 
-### Figure 2
+This interactive visualization ranks the variable by how significant it is in the random forest used to predict the presence of a heart disease. The higher the importance value the more influence it has in the process of prediction relative to other predictors. 
 
+
+
+```{r xgbImportance}
+xgb_importance_plot <- ximportance_df %>% ggplot() +
+  geom_bar(stat = "identity", aes(x=Variables, y = Importance)) +
+  coord_flip() +
+  labs(title = "Extreme Gradient Boosting Rank Variables By Significance") +
+  theme_minimal()
+xgb_plot <- ggplotly(xgb_importance_plot)
+```
 ```{r echo=FALSE}
-barplot
+xgb_plot
 ```
 
+This interactive visualization ranks the variable by how significant it is in the extreme gradient boosting model used to predict the presence of a heart disease. The higher the importance value the more influence it has in the process of prediction relative to other predictors. Although it looks similar to the plot in above, the ranking is different. We can judge the relevance in the influence of each variable to the presence of heart disease based on the ranking of this plot.
+
+
+
+```{r}
+ximportance_df <- ximportance_df %>%
+  arrange(-Importance)
+importance_df <- importance_df %>%
+  arrange(-Importance)
+imTable <- data.frame(
+  `Extreme Gradient Boosting` = ximportance_df$Variables,
+  `Random Forest` = importance_df$Variables
+)
+kable(imTable) %>%
+  kable_styling()
+```
+
+This is the ranking of predictors in importance for each model. We can use this table to evaluate how relevant a predictor is by looking at its average ranking.
+
+# Citation
+
+fedesoriano. (September 2021). Heart Failure Prediction Dataset. Retrieved [Date Retrieved] from https://www.kaggle.com/fedesoriano/heart-failure-prediction.
+
+Soliman GA. Dietary Cholesterol and the Lack of Evidence in Cardiovascular Disease. Nutrients. 2018 Jun 16;10(6):780. doi: 10.3390/nu10060780. PMID: 29914176; PMCID: PMC6024687. 

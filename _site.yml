@@ -1,7 +1,13 @@
 name: "my-website"
 output_dir: "."
 navbar:
-  title: "My Website"
+  title: "JSC370 Final Project"
   left:
-    - text: "Home"
+    - text: "Analysis"
       href: index.html
+    - text: "README"
+      href: README.html
+output:
+  html_document:
+    theme: cosmo
+    css: styles.css

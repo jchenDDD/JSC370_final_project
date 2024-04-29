@@ -1,0 +1,286 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={JSC370 Final Project},
+  pdfauthor={John Chen},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{JSC370 Final Project}
+\author{John Chen}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+The purpose of this analysis is to attempt to create a model that best
+predicts the existence of a heart disease given the body condition of an
+individual. The model will also be used to examine the relationship and
+significance between selected features and the response variable. The
+dataset we will be using is the
+\href{https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction/data}{Heart
+Failure Prediction Dataset}. It contains 918 observations 11 features:
+Age, Sex, Chest Pain Type, Resting blood pressure, Cholesterol, Fasting
+blood sugar, Resting electrocardiogram results, maximum heart rate
+achieved, exercise-induced angina, oldpeak, and the slope of the peak
+exercise ST segment. Duplicates were removed.
+
+\hypertarget{method}{%
+\section{Method}\label{method}}
+
+Our dataset is cross-sectional and combined from 5 datasets used for
+heart disease research:
+\href{https://archive.ics.uci.edu/dataset/45/heart+disease}{Cleveland,
+Hungarian, Switzerland, Long Beach},
+\href{https://archive.ics.uci.edu/dataset/145/statlog+heart}{Stalog Data
+set}. They are all from the UCI Machine Learning Repository. The dataset
+will be split into 80-20 portions for training and testing respectively.
+We will compare the accuracy between logistic regression, random forest,
+and Extreme Gradient Boosting and interpret the best model. The
+assumptions of logistic regression is met: observations are independent
+from each other(each patient only has one observation), the response
+variable is binary, and we will be using the logit function as the link
+function. For testing, the predicted probability will be evaluated to 1
+if its above 0.5, otherwise it will be evaluated to 0. For random forest
+and Extreme Gradient Boosting, we will fine tune the parameters for best
+accuracy.
+
+\hypertarget{eda}{%
+\subsubsection{EDA}\label{eda}}
+
+Through basic data wrangling, this data contains no missing values and
+all variables types are in their expected type, categorical predictors
+will be transformed into factors for decision tree models training, and
+all unique values of categorical variables make sense, and the response
+variable only has two values for heart disease indication.
+
+The distribution of heart disease is about uniform. The clustering of
+the scatterplots between predictors does not show non-linear pattern.
+This suggest that the regression should be a good fit.
+
+There are 172 observations with 0 serum cholesterol which doesn't make
+any sense. Based on this
+\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6024687/}{study},
+there is no evidence that there is a correlation between cholesterol and
+heart disease. Therefore, it is expected that replacing 0 cholesterol
+with the median will not have significant impact on training results.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+AUC of the logistic regression model is 0.89 which indicates that the
+model is good at ranking the probabilities of the presence of heart
+disease in the training set. Accuracy of the model is around 16\% which
+indicates the it is not good at predicting new dataset. This could mean
+that the model is overfit. The coefficients of the model is presented
+below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logistic\_table }\OtherTok{\textless{}{-}} \FunctionTok{tidy}\NormalTok{(reduced\_model)}
+\FunctionTok{kable}\NormalTok{(logistic\_table, }\AttributeTok{format =} \StringTok{"latex"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+\centering
+\begin{tabular}{l|r|r|r|r}
+\hline
+term & estimate & std.error & statistic & p.value\\
+\hline
+(Intercept) & 0.2800439 & 0.9096977 & 0.3078428 & 0.7582020\\
+\hline
+SexM & 1.5169741 & 0.3116394 & 4.8677225 & 0.0000011\\
+\hline
+ChestPainTypeATA & -2.1393969 & 0.3907402 & -5.4752413 & 0.0000000\\
+\hline
+ChestPainTypeNAP & -1.5470520 & 0.2920778 & -5.2967126 & 0.0000001\\
+\hline
+ChestPainTypeTA & -1.7367296 & 0.5011811 & -3.4652737 & 0.0005297\\
+\hline
+FastingBS & 1.4607001 & 0.3012573 & 4.8486799 & 0.0000012\\
+\hline
+MaxHR & -0.0122388 & 0.0051253 & -2.3879102 & 0.0169445\\
+\hline
+ExerciseAnginaY & 0.9220335 & 0.2751079 & 3.3515347 & 0.0008036\\
+\hline
+Oldpeak & 0.3480843 & 0.1289783 & 2.6987824 & 0.0069594\\
+\hline
+ST\_SlopeFlat & 1.4988307 & 0.4682215 & 3.2011145 & 0.0013690\\
+\hline
+ST\_SlopeUp & -1.0444413 & 0.4871879 & -2.1438165 & 0.0320476\\
+\hline
+\end{tabular}
+\end{table}
+
+We can interpret the coefficient as odds ratio. For example, the odds of
+male having heart disease is 0.212248 times higher than the odds of
+female having heart disease.
+
+We have the following accuracy percentage after training random forest
+and extreme gradient boosting models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{accuracy\_table }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \StringTok{\textasciigrave{}}\AttributeTok{Logistic Regression}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ logistic\_por}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}
+  \StringTok{\textasciigrave{}}\AttributeTok{Random Forest Model}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ rf\_por}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}
+  \StringTok{\textasciigrave{}}\AttributeTok{Extreme Gradient Boosting}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ xgb\_por}\SpecialCharTok{*}\DecValTok{100}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(accuracy\_table, }\AttributeTok{format =} \StringTok{"latex"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+\centering
+\begin{tabular}{r|r|r}
+\hline
+Logistic.Regression & Random.Forest.Model & Extreme.Gradient.Boosting\\
+\hline
+16.30435 & 16.30435 & 12.5\\
+\hline
+\end{tabular}
+\end{table}
+
+The accuracy for all model is low. This could a sign of overfitting for
+all models. This result might also indicate that the features are not
+good predictors of heart disease. Refering to the ranking table of on
+home webpage, slope of the peak exercise ST segment and max heart rate
+seems to be extremely relevant because it was showed as the most
+relevant variables in both models. It is unexpected that Cholesterol is
+relatively high on the ranking since literature concluded that there is
+no evidence between high cholesterol and higher risk of heart disease.
+This could be because that the relationship between cholesterol and
+heart disease depends on cofounders.
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+We have failed to train a model that accurately predict the presence of
+heart disease. There is an indication of overfitting. Models like deep
+learning with heavy regularization might be more fitting for this
+analysis. However, we did concluded that slope of the peak exercise ST
+segment and max heart rate are extremely relevant in prediction, more
+specifically, Upsloping ST segment and low max max heart rate.
+
+\end{document}

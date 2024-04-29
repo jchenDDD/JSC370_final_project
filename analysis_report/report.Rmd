@@ -1,0 +1,64 @@
+---
+title: "JSC370 Final Project"
+author: "John Chen"
+output:
+  pdf_document: default
+---
+
+```{r echo=FALSE}
+library(broom)
+library(kableExtra)
+library(gridExtra)
+```
+
+
+# Introduction
+The purpose of this analysis is to attempt to create a model that best predicts the existence of a heart disease given the body condition of an individual. The model will also be used to examine the relationship and significance between selected features and the response variable. The dataset we will be using is the [Heart Failure Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction/data). It contains 918 observations 11 features: Age, Sex, Chest Pain Type, Resting blood pressure, Cholesterol, Fasting blood sugar, Resting electrocardiogram results, maximum heart rate achieved, exercise-induced angina, oldpeak, and the slope of the peak exercise ST segment. Duplicates were removed. 
+
+# Method
+Our dataset is cross-sectional and combined from 5 datasets used for heart disease research: [Cleveland, Hungarian, Switzerland, Long Beach](https://archive.ics.uci.edu/dataset/45/heart+disease), [Stalog Data set](https://archive.ics.uci.edu/dataset/145/statlog+heart). 
+They are all from the UCI Machine Learning Repository. 
+The dataset will be split into 80-20 portions for training and testing respectively. We will compare the accuracy between logistic regression, random forest, and Extreme Gradient Boosting and interpret the best model.
+The assumptions of logistic regression is met: observations are independent from each other(each patient only has one observation), the response variable is binary, and we will be using the logit function as the link function. For testing, the predicted probability will be evaluated to 1 if its above 0.5, otherwise it will be evaluated to 0.
+For random forest and Extreme Gradient Boosting, we will fine tune the parameters for best accuracy.
+
+### EDA
+Through basic data wrangling, this data contains no missing values and all variables types are in their expected type, categorical predictors will be transformed into factors for decision tree models training, and all unique values of categorical variables make sense, and the response variable only has two values for heart disease indication. 
+
+The distribution of heart disease is about uniform. The clustering of the scatterplots between predictors does not show non-linear pattern. This suggest that the regression should be a good fit.
+
+There are 172 observations with 0 serum cholesterol which doesn't make any sense. Based on this [study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6024687/), there is no evidence that there is a correlation between cholesterol and heart disease. Therefore, it is expected that replacing 0 cholesterol with the median will not have significant impact on training results.
+
+```{r include = FALSE, message = FALSE, warning=FALSE, cache = TRUE}
+source("analysis_heart_data.R")
+```
+
+# Results
+
+AUC of the logistic regression model is 0.89 which indicates that the model is good at ranking the probabilities of the presence of heart disease in the training set. Accuracy of the model is around 16% which indicates the it is not good at predicting new dataset. This could mean that the model is overfit.
+The coefficients of the model is presented below.
+```{r}
+logistic_table <- tidy(reduced_model)
+kable(logistic_table, format = "latex") %>%
+  kable_styling()
+```
+
+We can interpret the coefficient as odds ratio. For example, the odds of male having heart disease is `r exp(-1.55)` times higher than the odds of female having heart disease. 
+
+We have the following accuracy percentage after training random forest and extreme gradient boosting models.
+```{r}
+accuracy_table <- data.frame(
+  `Logistic Regression` = logistic_por*100,
+  `Random Forest Model` = rf_por*100,
+  `Extreme Gradient Boosting` = xgb_por*100
+)
+
+kable(accuracy_table, format = "latex") %>%
+  kable_styling()
+```
+
+The accuracy for all model is low. This could a sign of overfitting for all models. This result might also indicate that the features are not good predictors of heart disease. Refering to the ranking table of on home webpage, slope of the peak exercise ST segment and max heart rate seems to be extremely relevant because it was showed as the most relevant variables in both models. It is unexpected that Cholesterol is relatively high on the ranking since literature concluded that there is no evidence between high cholesterol and higher risk of heart disease. This could be because that the relationship between cholesterol and heart disease depends on cofounders.
+
+# Conclusion
+We have failed to train a model that accurately predict the presence of heart disease. There is an indication of overfitting. Models like deep learning with heavy regularization might be more fitting for this analysis. However, we did concluded that slope of the peak exercise ST segment and max heart rate are extremely relevant in prediction, more specifically, Upsloping ST segment and low max max heart rate.
+
