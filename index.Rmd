@@ -23,7 +23,7 @@ for(p in packages){
 }
 ```
 
-```{r message = FALSE, warning=FALSE}
+```{r message = FALSE, warning=FALSE, cache = TRUE}
 source("analysis_heart_data.R")
 ```
 

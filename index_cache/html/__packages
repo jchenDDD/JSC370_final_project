@@ -11,13 +11,11 @@ lubridate
 hms
 kableExtra
 gridExtra
-httr
 plotly
 htmlwidgets
 widgetframe
 tidytext
 pROC
-ROCR
 randomForest
 xgboost
 lattice
